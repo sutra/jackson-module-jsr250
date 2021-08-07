@@ -7,6 +7,8 @@ import java.io.Serializable;
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.RolesAllowed;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.TestingAuthenticationToken;
@@ -17,6 +19,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 class Jsr250ModuleTest {
+
+	private final Logger log = LogManager.getLogger();
 
 	private User user;
 
@@ -32,7 +36,9 @@ class Jsr250ModuleTest {
 	void testNoJsr250Module() throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		assertEquals("{\"nickname\":\"John Doe\",\"username\":\"john\",\"password\":\"secret\"}", objectMapper.writeValueAsString(user));
+		String json = objectMapper.writeValueAsString(user);
+		log.info(json);
+		assertEquals("{\"nickname\":\"John Doe\",\"username\":\"john\",\"password\":\"secret\"}", json);
 	}
 
 	@Test
@@ -40,15 +46,21 @@ class Jsr250ModuleTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new Jsr250Module());
 
-		assertEquals("{\"nickname\":\"John Doe\"}", objectMapper.writeValueAsString(user));
+		String json = objectMapper.writeValueAsString(user);
+		log.info(json);
+		assertEquals("{\"nickname\":\"John Doe\"}", json);
 
 		Authentication userAuthentication = new TestingAuthenticationToken("user", "pass", "ROLE_USER");
 		SecurityContextHolder.getContext().setAuthentication(userAuthentication);
-		assertEquals("{\"nickname\":\"John Doe\"}", objectMapper.writeValueAsString(user));
+		json = objectMapper.writeValueAsString(user);
+		log.info(json);
+		assertEquals("{\"nickname\":\"John Doe\"}", json);
 
 		Authentication adminAuthentication = new TestingAuthenticationToken("user", "pass", "ROLE_USER", "ROLE_ADMIN");
 		SecurityContextHolder.getContext().setAuthentication(adminAuthentication);
-		assertEquals("{\"nickname\":\"John Doe\",\"username\":\"john\"}", objectMapper.writeValueAsString(user));
+		json = objectMapper.writeValueAsString(user);
+		log.info(json);
+		assertEquals("{\"nickname\":\"John Doe\",\"username\":\"john\"}", json);
 	}
 
 	public static class User implements Serializable {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5p [%t] %C{2} (%F:%L) - %m%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.oxerr.jackson.module.jsr250" level="ALL" />
+		<Root level="WARN">
+			<AppenderRef ref="console" />
+		</Root>
+	</Loggers>
+</Configuration>
