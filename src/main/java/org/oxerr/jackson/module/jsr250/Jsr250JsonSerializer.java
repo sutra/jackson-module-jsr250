@@ -59,7 +59,7 @@ public class Jsr250JsonSerializer extends BeanSerializer {
 					if (denyAll != null) {
 						log.trace("DenyAll, ignoring {}.", prop);
 					} else if (rolesAllowed != null && !this.isAllowed(rolesAllowed.value(), grantedAuthorities)) {
-						log.trace("RolesAllowed({}), ignoring {}.", () -> rolesAllowed.value(), () -> prop);
+						log.trace("RolesAllowed({}), ignoring {}.", rolesAllowed::value, () -> prop);
 					} else {
 						prop.serializeAsField(bean, gen, provider);
 					}
