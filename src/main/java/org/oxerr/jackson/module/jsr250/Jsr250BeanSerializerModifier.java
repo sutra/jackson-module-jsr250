@@ -21,7 +21,7 @@ public class Jsr250BeanSerializerModifier extends BeanSerializerModifier {
 			BeanDescription beanDesc, JsonSerializer<?> serializer) {
 		if (serializer instanceof BeanSerializer) {
 			log.trace("Modifying serializer to RolesAllowedJsonSerializer, for bean type: {}.",
-				() -> beanDesc.getBeanClass());
+				beanDesc::getBeanClass);
 			return new Jsr250JsonSerializer((BeanSerializer) serializer);
 		} else {
 			return serializer;

@@ -10,15 +10,30 @@
  * For example:
  * <pre>
  * public class User {
- *     private String phone;
+ *
+ *     private String nickname;
+ *
+ *     private String username;
+ *
+ *     private String password;
+ *
+ *     public String getNickname() {
+ *         return nickname;
+ *     }
  *
  *     &#064;RolesAllowed("ROLE_ADMIN")
- *     public String getPhone() {
- *         return phone;
+ *     public String getUsername() {
+ *         return username;
  *     }
+ *
+ *     &#064;DenyAll
+ *     public String getPassword() {
+ *         return password;
+ *     }
+ *
  * }
  * </pre>
- * The phone will be excluded if currently authenticated principal is not in
- * ADMIN role.
+ * The {@code username} will be excluded if currently authenticated principal
+ * is not in ADMIN role, and the {@code password} will be always excluded.
  */
 package org.oxerr.jackson.module.jsr250;

@@ -1,6 +1,7 @@
 package org.oxerr.jackson.module.jsr250;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -28,7 +29,7 @@ public class Jsr250JsonSerializer extends BeanSerializer {
 
 	private static final long serialVersionUID = 2016100501L;
 
-	private final Logger log = LogManager.getLogger();
+	private transient Logger log = LogManager.getLogger(Jsr250JsonSerializer.class);
 
 	public Jsr250JsonSerializer(BeanSerializer serializer) {
 		super(serializer);
@@ -59,7 +60,7 @@ public class Jsr250JsonSerializer extends BeanSerializer {
 					if (denyAll != null) {
 						log.trace("DenyAll, ignoring {}.", prop);
 					} else if (rolesAllowed != null && !this.isAllowed(rolesAllowed.value(), grantedAuthorities)) {
-						log.trace("RolesAllowed({}), ignoring {}.", () -> rolesAllowed.value(), () -> prop);
+						log.trace("RolesAllowed({}), ignoring {}.", rolesAllowed::value, () -> prop);
 					} else {
 						prop.serializeAsField(bean, gen, provider);
 					}
@@ -100,6 +101,10 @@ public class Jsr250JsonSerializer extends BeanSerializer {
 	protected Collection<? extends GrantedAuthority> getGrantedAuthorities() {
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		return authentication != null ? authentication.getAuthorities() : Collections.emptyList();
+	}
+
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+		this.log = LogManager.getLogger(Jsr250JsonSerializer.class);
 	}
 
 }
