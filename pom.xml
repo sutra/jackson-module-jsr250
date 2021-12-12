@@ -13,7 +13,7 @@
 	</parent>
 	<groupId>org.oxerr.jackson.module</groupId>
 	<artifactId>jackson-module-jsr250</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>Security Entity Filtering Module</name>
 	<description>
 		Filter out the entity properties from the output of Jackson
