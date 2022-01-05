@@ -13,7 +13,7 @@
 	</parent>
 	<groupId>org.oxerr.jackson.module</groupId>
 	<artifactId>jackson-module-jsr250</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<name>Security Entity Filtering Module</name>
 	<description>
 		Filter out the entity properties from the output of Jackson
@@ -24,7 +24,7 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<log4j.version>2.17.0</log4j.version>
+		<log4j.version>2.17.1</log4j.version>
 	</properties>
 	<build>
 		<plugins>
@@ -240,12 +240,12 @@
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-core</artifactId>
-				<version>5.6.0</version>
+				<version>5.6.1</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
-				<version>2.13.0</version>
+				<version>2.13.1</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
